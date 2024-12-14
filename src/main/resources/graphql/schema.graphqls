@@ -1,0 +1,42 @@
+type Movie {
+    id: ID!
+    title: String!
+    description: String!
+    genre: Genre!
+    reviews: [Review!]
+}
+
+type Genre {
+    id: ID!
+    name: String!
+}
+
+type Review {
+    id: ID!
+    comment: String!
+    rating: Int!
+    movie: Movie!
+}
+
+type Query {
+    movies: [Movie!]
+    movieById(id: ID!): Movie
+    genres: [Genre!]
+    genreById(id: ID!): Genre
+    reviews: [Review!]
+    reviewById(id: ID!): Review
+}
+
+type Mutation {
+    addMovie(title: String!, description: String!, genreName: String!): Movie!
+    updateMovie(id: ID!, title: String, description: String, genreName: String): Movie!
+    deleteMovie(id: ID!): Movie!
+
+    addGenre(name: String!): Genre!
+    updateGenre(id: ID!, name: String!): Genre!
+    deleteGenre(id: ID!): Genre!
+
+    addReview(movieId: ID!, comment: String!, rating: Int!): Review!
+    updateReview(id: ID!, comment: String, rating: Int): Review!
+    deleteReview(id: ID!): Review!
+}

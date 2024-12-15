@@ -25,6 +25,7 @@ type Query {
     genreById(id: ID!): Genre
     reviews: [Review!]
     reviewById(id: ID!): Review
+    searchMovies(query: String!): [Movie!]
 }
 
 type Mutation {

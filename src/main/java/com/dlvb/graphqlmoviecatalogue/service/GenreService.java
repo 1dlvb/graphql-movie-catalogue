@@ -38,6 +38,11 @@ public class GenreService {
         return genreRepository.findGenreByName(name);
     }
 
+    public Genre findGenreById(Long id) {
+        return genreRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException(String.format("Genre with id %s is not found.", id)));
+    }
+
     public List<Genre> getAllGenres() {
         return genreRepository.findAll();
     }

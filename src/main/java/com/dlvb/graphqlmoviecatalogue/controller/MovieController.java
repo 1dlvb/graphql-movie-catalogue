@@ -42,7 +42,8 @@ public class MovieController {
     }
 
     @MutationMapping
-    public Movie updateMovie(@Argument Long id, @Argument String title, @Argument String description, @Argument String genreName) {
+    public Movie updateMovie(@Argument Long id, @Argument String title,
+                             @Argument String description, @Argument String genreName) {
         return movieService.updateMovie(id, title, description, genreName);
     }
 
@@ -52,8 +53,16 @@ public class MovieController {
     }
 
     @QueryMapping
-    public List<Movie> searchMovies(@Argument String query) {
-        Search.SearchResponse response = movieSearchClient.searchMovies(query);
+    public List<Movie> searchMovies(
+            @Argument String query,
+            @Argument(name = "page_number") Integer pageNumber,
+            @Argument(name = "page_size") Integer pageSize
+    ) {
+        pageNumber = (pageNumber == null) ? 0 : pageNumber;
+        pageSize = (pageSize == null) ? 10 : pageSize;
+
+        Search.SearchResponse response = movieSearchClient.searchMovies(query, pageNumber, pageSize);
+
         return response.getMoviesList().stream()
                 .map(movie -> Movie.builder()
                         .id(Long.valueOf(movie.getId()))

@@ -1,50 +1,61 @@
 package com.dlvb.graphqlmoviecatalogue.service;
 
 import com.dlvb.graphqlmoviecatalogue.model.Genre;
-import com.dlvb.graphqlmoviecatalogue.repository.GenreRepository;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class GenreService {
+/**
+ * Service interface for managing genres in the movie catalogue.
+ * @author Matushkin Anton
+ */
+public interface GenreService {
 
-    private final GenreRepository genreRepository;
+    /**
+     * Adds a new genre to the catalogue.
+     *
+     * @param name the name of the genre to be added
+     * @return the created Genre object
+     */
+    Genre addGenre(String name);
 
-    public Genre addGenre(String name) {
-        return genreRepository.save(Genre.builder()
-                .name(name)
-                .build());
-    }
+    /**
+     * Updates an existing genre with a new name.
+     *
+     * @param id   the ID of the genre to be updated
+     * @param name the new name of the genre
+     * @return the updated Genre object
+     */
+    Genre updateGenre(Long id, String name);
 
-    public Genre updateGenre(Long id, String name) {
-        Genre genre = genreRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Genre not found"));
-        genre.setName(name);
-        return genreRepository.save(genre);
-    }
+    /**
+     * Deletes a genre from the catalogue.
+     *
+     * @param id the ID of the genre to be deleted
+     * @return the deleted Genre object
+     */
+    Genre deleteGenre(Long id);
 
-    public Genre deleteGenre(Long id) {
-        Genre genre = genreRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Genre not found"));
-        genreRepository.delete(genre);
-        return genre;
-    }
+    /**
+     * Finds a genre by its name.
+     *
+     * @param name the name of the genre to be found
+     * @return the Genre object if found, or null if no genre with the given name exists
+     */
+    Genre findGenreByName(String name);
 
-    public Genre findGenreByName(String name) {
-        return genreRepository.findGenreByName(name);
-    }
+    /**
+     * Finds a genre by its ID.
+     *
+     * @param id the ID of the genre to be found
+     * @return the Genre object if found, or null if no genre with the given ID exists
+     */
+    Genre findGenreById(Long id);
 
-    public Genre findGenreById(Long id) {
-        return genreRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException(String.format("Genre with id %s is not found.", id)));
-    }
-
-    public List<Genre> getAllGenres() {
-        return genreRepository.findAll();
-    }
+    /**
+     * Retrieves all genres in the catalogue.
+     *
+     * @return a list of all genres
+     */
+    List<Genre> getAllGenres();
 
 }

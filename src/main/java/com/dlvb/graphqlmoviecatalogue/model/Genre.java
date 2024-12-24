@@ -10,6 +10,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing a movie genre in the system.
+ * @author Matushkin Anton
+ */
 @Entity
 @Data
 @Builder

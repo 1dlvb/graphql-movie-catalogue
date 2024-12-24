@@ -15,6 +15,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Entity representing a movie in the system.
+ * @author Matushkin Anton
+ */
 @Entity
 @Data
 @Builder

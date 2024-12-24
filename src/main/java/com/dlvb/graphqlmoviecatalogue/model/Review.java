@@ -11,6 +11,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing a review for a movie.
+ * @author Matushkin Anton
+ */
 @Entity
 @Data
 @Builder

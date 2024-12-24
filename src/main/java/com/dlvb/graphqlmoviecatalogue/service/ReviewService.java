@@ -1,55 +1,47 @@
 package com.dlvb.graphqlmoviecatalogue.service;
 
-import com.dlvb.graphqlmoviecatalogue.model.Movie;
 import com.dlvb.graphqlmoviecatalogue.model.Review;
-import com.dlvb.graphqlmoviecatalogue.repository.ReviewRepository;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class ReviewService {
+/**
+ * Service interface for managing movie reviews in the catalogue.
+ */
+public interface ReviewService {
 
-    private final ReviewRepository reviewRepository;
-    private final MovieService movieService;
+    /**
+     * Adds a new review for a movie.
+     *
+     * @param movieId the ID of the movie the review is for
+     * @param comment the comment of the review
+     * @param rating  the rating of the movie (e.g., from 1 to 5)
+     * @return the created Review object
+     */
+    Review addReview(Long movieId, String comment, int rating);
 
-    public Review addReview(Long movieId, String comment, int rating) {
-        Movie movie = movieService.getMovieById(movieId);
-        return reviewRepository.save(Review.builder()
-                .comment(comment)
-                .rating(rating)
-                .movie(movie)
-                .build());
-    }
+    /**
+     * Updates an existing review with new details.
+     *
+     * @param id       the ID of the review to be updated
+     * @param comment the new comment for the review
+     * @param rating  the new rating for the review
+     * @return the updated Review object
+     */
+    Review updateReview(Long id, String comment, Integer rating);
 
-    public Review updateReview(Long id, String comment, Integer rating) {
-        Review review = reviewRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Review not found"));
+    /**
+     * Deletes a review from the catalogue.
+     *
+     * @param id the ID of the review to be deleted
+     * @return the deleted Review object
+     */
+    Review deleteReview(Long id);
 
-        if (comment != null) {
-            review.setComment(comment);
-        }
-
-        if (rating != null) {
-            review.setRating(rating);
-        }
-
-        return reviewRepository.save(review);
-    }
-
-    public Review deleteReview(Long id) {
-        Review review = reviewRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Review not found"));
-        reviewRepository.delete(review);
-        return review;
-    }
-
-    public List<Review> getAllReviews() {
-        return reviewRepository.findAll();
-    }
+    /**
+     * Retrieves all reviews in the catalogue.
+     *
+     * @return a list of all reviews
+     */
+    List<Review> getAllReviews();
 
 }
-

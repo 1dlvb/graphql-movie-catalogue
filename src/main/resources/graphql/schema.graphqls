@@ -19,14 +19,15 @@ type Review {
 }
 
 type Query {
-    movies: [Movie!]
+    movies(query: String, page_number: Int, page_size: Int): [Movie!]
     movieById(id: ID!): Movie
     genres: [Genre!]
     genreById(id: ID!): Genre
     reviews: [Review!]
     reviewById(id: ID!): Review
-    searchMovies(query: String!): [Movie!]
+    searchMovies(query: String, page_number: Int, page_size: Int): [Movie!]
 }
+
 
 type Mutation {
     addMovie(title: String!, description: String!, genreName: String!): Movie!

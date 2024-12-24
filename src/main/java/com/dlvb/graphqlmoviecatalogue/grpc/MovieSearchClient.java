@@ -13,8 +13,15 @@ public class MovieSearchClient {
     @NonNull
     private final MovieSearchServiceGrpc.MovieSearchServiceBlockingStub blockingStub;
 
-    public Search.SearchResponse searchMovies(String query) {
-        Search.SearchRequest request = Search.SearchRequest.newBuilder().setQuery(query).build();
+    public Search.SearchResponse searchMovies(String query, Integer pageNumber, Integer pageSize) {
+        Search.SearchRequest.Builder requestBuilder = Search.SearchRequest.newBuilder();
+
+        requestBuilder.setQuery((query == null || query.isEmpty()) ? "" : query);
+
+        requestBuilder.setPageNumber(pageNumber);
+        requestBuilder.setPageSize(pageSize);
+
+        Search.SearchRequest request = requestBuilder.build();
 
         return blockingStub.searchMovies(request);
     }

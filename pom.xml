@@ -107,6 +107,11 @@
             <artifactId>protobuf-java-util</artifactId>
             <version>4.29.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

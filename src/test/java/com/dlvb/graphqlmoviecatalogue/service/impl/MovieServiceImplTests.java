@@ -1,6 +1,5 @@
 package com.dlvb.graphqlmoviecatalogue.service.impl;
 
-import com.dlvb.graphqlmoviecatalogue.model.Genre;
 import com.dlvb.graphqlmoviecatalogue.model.Movie;
 import com.dlvb.graphqlmoviecatalogue.repository.MovieRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,7 +18,10 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Testcontainers
@@ -56,7 +58,7 @@ class MovieServiceImplTests {
 
     @Test
     void testAddMovieCreatesMovie() {
-        Genre genre = genreService.addGenre("Action1");
+        genreService.addGenre("Action1");
         Movie movie = movieService.addMovie("Inception",
                 "thriller", "Action1");
 

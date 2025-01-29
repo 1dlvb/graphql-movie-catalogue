@@ -13,7 +13,16 @@ services:
     volumes:
       - movie_service_postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"
+    networks:
+      - external_network
 
+networks:
+  external_network:
+    external: true
 
 volumes:
   movie_service_postgres_data:
